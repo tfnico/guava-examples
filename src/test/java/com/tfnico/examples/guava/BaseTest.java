@@ -46,7 +46,6 @@ public class BaseTest
         // Primitive defaults:
         Integer defaultValue = Defaults.defaultValue(int.class);
         assertEquals(0, defaultValue.intValue());
-
     }
 
     @Test
@@ -72,7 +71,7 @@ public class BaseTest
     {
         String string = "A:B:C";
 
-        String[] parts = string.split(":");
+        String[] parts = string.split(":"); //the old way
         String backTogether = Joiner.on(":").join(parts);
         assertEquals(string, backTogether);
 
@@ -115,7 +114,6 @@ public class BaseTest
         String string = Objects.toStringHelper(bob).add("name", bob.getName())
                 .add("id", bob.getId()).toString();
         assertEquals("Customer{name=Bob, id=1}", string);
-
     }
 
     @Test(expected = NullPointerException.class)
@@ -149,15 +147,14 @@ public class BaseTest
         Function<Object, String> toStringFunction = Functions
                 .toStringFunction();
         assertEquals("Bob (id 1)", toStringFunction.apply(bob));
-
-        // More fancy:
-        Function<Customer, Boolean> isCustomerWithOddId = new Function<Customer, Boolean>()
-        {
-            public Boolean apply(Customer customer)
-            {
+    }
+        
+    @Test
+    public void fancierFunctions() {
+        Function<Customer, Boolean> isCustomerWithOddId = new Function<Customer, Boolean>() {
+            public Boolean apply(Customer customer) {
                 return customer.getId().intValue() % 2 != 0;
             }
-
         };
 
         assertTrue(isCustomerWithOddId.apply(bob));
@@ -180,7 +177,6 @@ public class BaseTest
         // Predicates are great to pass in to higher-order functions like filter/search
         Iterable<Customer> filtered = Iterables.filter(customers, bobOrLisa);
         assertEquals(2, ImmutableSet.copyOf(filtered).size());
-
     }
     
     @Test
@@ -199,7 +195,6 @@ public class BaseTest
 		cakeFactory.get();
 		
 		assertEquals(3, ingredientsFactory.getNumberOfIngredientsUsed());
-		
 	}
     
     @Test

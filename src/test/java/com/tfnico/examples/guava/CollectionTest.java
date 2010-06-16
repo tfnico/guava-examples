@@ -24,7 +24,7 @@ public class CollectionTest {
     
     
 	@Test
-	public void justSoYouRememberGoogleCollectionsArePartOfGuava()
+	public void someSets()
 	{
 		ImmutableSet<Customer> customers1 = ImmutableSet.of(bob, lisa, stephen);
 		ImmutableSet<Customer> customers2 = ImmutableSet.of(stephen, ken);
@@ -47,7 +47,7 @@ public class CollectionTest {
 	
 	@Test
 	public void some() {
-		
+		//TODO: Add more collections demos
 	}
 	
 	
