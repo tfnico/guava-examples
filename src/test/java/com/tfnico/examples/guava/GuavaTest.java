@@ -1,5 +1,5 @@
 
-package com.tfnico.examples;
+package com.tfnico.examples.guava;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -30,7 +30,7 @@ import com.google.common.collect.Iterables;
 /**
  * Unit test for simple App.
  */
-public class AppTest
+public class GuavaTest
 {
 
     @Test
