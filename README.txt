@@ -1,1 +1,1 @@
-The same code examples are copied into a PDF here: http://dl.dropbox.com/u/2800202/Presentations/google-guava.pdf
+You can also find slides with the examples here: http://blog.tfnico.com/2010/06/google-guava-taking-over-for-google.html
