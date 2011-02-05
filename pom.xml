@@ -29,7 +29,7 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>r05</version>
+			<version>r08</version>
 		</dependency>
 	</dependencies>
 </project>
