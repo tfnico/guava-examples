@@ -182,7 +182,7 @@ public class BaseTest
     @Test
 	public void someSuppliers()
     {
-    	//Imagine we have Supploer that produces ingredients
+    	//Imagine we have Supplier that produces ingredients
     	IngredientsFactory ingredientsFactory = new IngredientsFactory();
 			
 		//A function 'bake' that transforms ingredients into cakes
@@ -195,6 +195,7 @@ public class BaseTest
 		cakeFactory.get();
 		
 		assertEquals(3, ingredientsFactory.getNumberOfIngredientsUsed());
+		
 	}
     
     @Test
