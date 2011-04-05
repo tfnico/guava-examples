@@ -8,7 +8,7 @@
 	<name>guava-examples</name>
 	<url>http://tfnico.com</url>
     <build>
-    <plugins>
+        <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
