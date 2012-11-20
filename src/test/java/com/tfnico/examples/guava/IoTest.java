@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.net.URL;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -26,7 +27,7 @@ public class IoTest {
         try {
             Files.touch(file);
 
-            Files.write("Hey sailor!", file, Charsets.UTF_8);
+            Files.write("Hey sailor!\n hello li", file, Charsets.UTF_8);
 
             // Breakpoint here.. have a look at the file..
 
@@ -34,8 +35,12 @@ public class IoTest {
             Files.newInputStreamSupplier(file);
             assertEquals("Hey sailor!",
                     Files.readFirstLine(file, Charsets.UTF_8));
-            assertEquals("Hey sailor!", Files.toString(file, Charsets.UTF_8));
+            assertEquals("Hey sailor!\n hello li", Files.toString(file, Charsets.UTF_8));
+            List<String> lines = Files.readLines(file, Charsets.UTF_8);
+            assertEquals("Hey sailor!", lines.get(0));
+            assertEquals(" hello li", lines.get(1));
 
+            assertEquals("txt", Files.getFileExtension(file.getName()));
             file.delete();
             // guava has abandoned this method 
 //            Files.deleteRecursively(file);
