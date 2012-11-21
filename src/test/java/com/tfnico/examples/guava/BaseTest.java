@@ -1,4 +1,3 @@
-
 package com.tfnico.examples.guava;
 
 import static org.junit.Assert.assertEquals;
@@ -27,12 +26,10 @@ import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 
-public class BaseTest
-{
+public class BaseTest {
 
     @Test
-    public void charSetsAndDefaults()
-    {
+    public void charSetsAndDefaults() {
         // Here's some charsets
         Charset utf8 = Charsets.UTF_8;
         assertTrue(utf8.canEncode());
@@ -43,29 +40,25 @@ public class BaseTest
     }
 
     @Test
-    public void equalityAndIdentity()
-    {
-    	//These could be useful for building equals methods
+    public void equalityAndIdentity() {
+        // These could be useful for building equals methods
         assertFalse(Equivalences.equals().equivalent("you", null));
         assertTrue(Equivalences.identity().equivalent("hey", "hey"));
     }
 
     @Test
-    public void joinSomeStrings()
-    {
+    public void joinSomeStrings() {
         ImmutableSet<String> strings = ImmutableSet.of("A", "B", "C");
 
         String joined = Joiner.on(":").join(strings);
         assertEquals("A:B:C", joined);
     }
 
-
     @Test
-    public void splitSomeStrings()
-    {
+    public void splitSomeStrings() {
         String string = "A:B:C";
 
-        String[] parts = string.split(":"); //the old way
+        String[] parts = string.split(":"); // the old way
         String backTogether = Joiner.on(":").join(parts);
         assertEquals(string, backTogether);
 
@@ -77,8 +70,7 @@ public class BaseTest
     }
 
     @Test
-    public void moreFunWithStrings()
-    {
+    public void moreFunWithStrings() {
         assertNull(Strings.emptyToNull(""));
         assertEquals("", Strings.nullToEmpty(null));
         assertTrue(Strings.isNullOrEmpty("")); // About the only thing we ever
@@ -87,16 +79,14 @@ public class BaseTest
         assertEquals("Too short      ", Strings.padEnd("Too short", 15, ' '));
     }
 
-
-    //Some customers
+    // Some customers
     Customer bob = new Customer(1, "Bob");
     Customer lisa = new Customer(2, "Lisa");
     Customer stephen = new Customer(3, "Stephen");
-    Customer ken = new Customer(null,"Ken");
+    Customer ken = new Customer(null, "Ken");
 
     @Test
-    public void toStringsAndHashcodes()
-    {
+    public void toStringsAndHashcodes() {
         Object[] bobAndLisa = new Object[] { bob, lisa };
 
         // Make some hashcode!
@@ -111,8 +101,7 @@ public class BaseTest
     }
 
     @Test(expected = NullPointerException.class)
-    public void needAnIntegerWhichIsNeverNull()
-    {
+    public void needAnIntegerWhichIsNeverNull() {
         Integer defaultId = null;
         Integer kensId = ken.getId() != null ? ken.getId() : defaultId;
         // this one does not throw!
@@ -123,26 +112,25 @@ public class BaseTest
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void somePreconditions()
-    {
+    public void somePreconditions() {
         // Pretend this is a constructor:
         Preconditions.checkNotNull(lisa.getId()); // Will throw NPE
-        Preconditions.checkState(!lisa.isSick()); // Will throw IllegalStateException
+        Preconditions.checkState(!lisa.isSick()); // Will throw
+                                                  // IllegalStateException
         Preconditions.checkArgument(lisa.getAddress() != null,
                 "We couldn't find the description for customer with id %s",
                 lisa.getId());
     }
 
     @Test
-    public void someFunctions()
-    {
+    public void someFunctions() {
         assertEquals("Bob (id 1)", bob.toString());
 
         Function<Object, String> toStringFunction = Functions
                 .toStringFunction();
         assertEquals("Bob (id 1)", toStringFunction.apply(bob));
     }
-        
+
     @Test
     public void fancierFunctions() {
         Function<Customer, Boolean> isCustomerWithOddId = new Function<Customer, Boolean>() {
@@ -158,107 +146,92 @@ public class BaseTest
         // project/transform, and fold
     }
 
-
     @Test
-    public void somePredicates()
-    {
+    public void somePredicates() {
         ImmutableSet<Customer> customers = ImmutableSet.of(bob, lisa, stephen);
 
         Predicate<Customer> itsBob = Predicates.equalTo(bob);
         Predicate<Customer> itsLisa = Predicates.equalTo(lisa);
         Predicate<Customer> bobOrLisa = Predicates.or(itsBob, itsLisa);
 
-        // Predicates are great to pass in to higher-order functions like filter/search
+        // Predicates are great to pass in to higher-order functions like
+        // filter/search
         Iterable<Customer> filtered = Iterables.filter(customers, bobOrLisa);
         assertEquals(2, ImmutableSet.copyOf(filtered).size());
     }
-    
-    
 
 }
 
-class Customer
-{
-    
+class Customer {
+
     private Integer id;
     private String name;
-    
-    public Customer(Integer id, String name)
-    {
+
+    public Customer(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
-    
-//    @Override
-//	public boolean equals(Object obj) {
-//    	if(!(obj instanceof Customer)) return false;
-//    	Customer that = (Customer)obj;
-//    	
-//    	Equivalence<Object> nae = Equivalences.nullAwareEquals();
-//		return nae.equivalent(name, that.getName())
-//    		&& nae.equivalent(id, that.getId());
-//	}
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Customer)) {
+            return false;
+        }
 
+        Customer that = (Customer) obj;
+        return Objects.equal(id, that.getId())
+                && Objects.equal(name, that.getName());
 
-	@Override
-	public int hashCode() {
-		return Objects.hashCode(id, name);
-	}
-
-
-
-	@Override
-    public String toString()
-    {
-        return name + " (id "+id+")";
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id, name);
+    }
 
+    @Override
+    public String toString() {
+        return name + " (id " + id + ")";
+    }
 
-    public Integer getId()
-    {
+    public Integer getId() {
         return id;
     }
 
-    public boolean isSick()
-    {
+    public boolean isSick() {
         return false;
     }
 
-    public String getAddress()
-    {
+    public String getAddress() {
         return null;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 }
 
-class Ingredients{
-	
+class Ingredients {
+
 }
 
 class Cake {
-	Cake(Ingredients ingredients) {
-		
-	}
+    Cake(Ingredients ingredients) {
+
+    }
 }
 
-class IngredientsFactory implements Supplier<Ingredients>{
+class IngredientsFactory implements Supplier<Ingredients> {
 
-	private int counter;
+    private int counter;
 
-	public Ingredients get() {
-		counter++;
-		return new Ingredients();
-	}
-	
-	int getNumberOfIngredientsUsed(){
-		return counter;
-	}
-	
+    public Ingredients get() {
+        counter++;
+        return new Ingredients();
+    }
+
+    int getNumberOfIngredientsUsed() {
+        return counter;
+    }
+
 }
-
