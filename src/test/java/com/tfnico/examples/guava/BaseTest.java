@@ -79,8 +79,10 @@ public class BaseTest {
 
         String a = "Too short      ";
         String b = a + " ";
-        assertEquals("Too short      ", Strings.padEnd("Too short", a.length(), ' '));
-        assertFalse("Too short      ".equals(Strings.padEnd(b, a.length(), ' ')));
+        assertEquals("Too short      ",
+                Strings.padEnd("Too short", a.length(), ' '));
+        assertFalse("Too short      "
+                .equals(Strings.padEnd(b, a.length(), ' ')));
 
         assertEquals(a, Strings.commonPrefix(a, b));
         assertEquals("      ", Strings.commonSuffix(a, b));
@@ -109,19 +111,24 @@ public class BaseTest {
 
     @Test(expected = NullPointerException.class)
     public void needAnIntegerWhichIsNeverNull() {
-        Integer defaultId = null;
+        Integer defaultId = 0;
         Integer kensId = ken.getId() != null ? ken.getId() : defaultId;
+        assertEquals(kensId, defaultId);
         // this one does not throw!
 
-        int kensId2 = Objects.firstNonNull(ken.getId(), defaultId);
+        int kensId2 = Objects.firstNonNull(ken.getId(), null);
         assertEquals(0, kensId2);
-        // But the above does!
+        // But the above does! That means that at least one parameter of
+        // Objects.firstNonNull should be nonNull
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void somePreconditions() {
         // Pretend this is a constructor:
-        Preconditions.checkNotNull(lisa.getId()); // Will throw NPE
+        Preconditions.checkNotNull(lisa.getId()); // Will not throw NPE
+        assertEquals(Preconditions.checkNotNull(lisa.getId()),
+                Integer.valueOf(2));
+
         Preconditions.checkState(!lisa.isSick()); // Will throw
                                                   // IllegalStateException
         Preconditions.checkArgument(lisa.getAddress() != null,
@@ -165,6 +172,7 @@ public class BaseTest {
         // filter/search
         Iterable<Customer> filtered = Iterables.filter(customers, bobOrLisa);
         assertEquals(2, ImmutableSet.copyOf(filtered).size());
+        assertEquals(ImmutableSet.of(bob, lisa), ImmutableSet.copyOf(filtered));
     }
 
 }
