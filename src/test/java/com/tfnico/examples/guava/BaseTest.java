@@ -8,14 +8,11 @@ import static org.junit.Assert.assertTrue;
 
 import java.nio.charset.Charset;
 import java.util.Arrays;
-import java.util.concurrent.Future;
 
 import org.junit.Test;
 
-import com.google.common.base.CaseFormat;
 import com.google.common.base.Charsets;
 import com.google.common.base.Defaults;
-import com.google.common.base.Equivalence;
 import com.google.common.base.Equivalences;
 import com.google.common.base.Function;
 import com.google.common.base.Functions;
@@ -27,8 +24,6 @@ import com.google.common.base.Predicates;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.base.Supplier;
-import com.google.common.base.Suppliers;
-import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 
