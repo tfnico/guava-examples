@@ -76,7 +76,14 @@ public class BaseTest {
         assertTrue(Strings.isNullOrEmpty("")); // About the only thing we ever
                                                // used in commons-lang? :)
         assertEquals("oioioi", Strings.repeat("oi", 3));
-        assertEquals("Too short      ", Strings.padEnd("Too short", 15, ' '));
+
+        String a = "Too short      ";
+        String b = a + " ";
+        assertEquals("Too short      ", Strings.padEnd("Too short", a.length(), ' '));
+        assertFalse("Too short      ".equals(Strings.padEnd(b, a.length(), ' ')));
+
+        assertEquals(a, Strings.commonPrefix(a, b));
+        assertEquals("      ", Strings.commonSuffix(a, b));
     }
 
     // Some customers
