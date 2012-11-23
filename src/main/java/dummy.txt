@@ -1,1 +1,0 @@
-This file is only here for the empty directory needed by maven. And Git doesn't support empty directories. 
